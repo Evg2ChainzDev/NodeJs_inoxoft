@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1> Hello dear {{userName}} </h1>
+
+{{#if isMale}}
+Hello Man{{else}}Hello GIRL
+{{/if}}
+
+{{#each users}}
+{{!-- // this = users[i] --}}
+<h2>name: {{this.name}}</h2>
+<h2>password: {{this.password}}</h2>
+{{/each}}
+
+</body>
+</html>
+
+{{!-- hbs has included var and iterations --}}

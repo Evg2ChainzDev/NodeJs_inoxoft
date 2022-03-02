@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="margin: 0 auto; text-align: center;">Register page</h1>
+
+
+    {{#if ifLoginWrong}}
+    <H4>Login incorrect, user not found. Back to login or register new user</H4>
+    {{/if }}
+    
+    <h2>Enter email and password</h2>
+    <form action="/auth2" method="post">
+        {{!-- <input type="email" name="email2" placeholder="email"> --}}
+        <input type="email" name="email" placeholder="email">
+        <input type="password" name="password" placeholder="password">
+        <input type="Submit" value="send">
+    </form>
+    <a href="/login">login page</a> <br>
+    <a href="/allusers">all users</a>
+</body>
+</html>
