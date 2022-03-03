@@ -88,46 +88,76 @@ app.post('/auth2', function(req, res) {
         return;
     }
 
-    readFilePromise( dbPath, (err, data) => {
+    async function readFileAsync() {
+        await readFilePromise( dbPath, (err, data) => {
             if (err) {
                 console.log(err)
                 return
             }
-            return data;
-        }).then(data => {
-            console.log(data);
-            usersFFile = JSON.parse(data);
-
-            console.log(usersFFile);
-            const newUser = { email, password }
-
-            usersFFile.push(newUser);
-            console.log(usersFFile);
-
-            writeFilePromise(dbPath, JSON.stringify(usersFFile) ,(err) => {
-                // console.log(1);
-                if (err) {
+            return usersFFile;
+    })}
+    
+    async function writeFileAsync() {
+        await writeFilePromise(dbPath, JSON.stringify(usersFFile) ,(err) => {
+                    if (err) {
                     console.log(err)
                     return
-                }
-            }).then(() => {
-                readFilePromise(dbPath, (err, data) => {
-                        if (err) {
-                            console.log(err)
-                            return
-                        }
-                    }).then((data) => {
-                        console.log(33);    
-                        usersFFile = JSON.parse(data);
-
-                        res.render('allUsers', { usersFFile });
+                    }
+                    console.log(`writeFileAsync works`)
                     })
-            })
-    })
+    }
+    
+    async function go() {
+        readFileAsync()
+        const newUser = { email, password }
+        usersFFile.push(newUser);
+        writeFileAsync()
+        res.render('allUsers', { usersFFile })
+    }
 
-    })
+    go();
+})
+
+    // readFilePromise( dbPath, (err, data) => {
+    //         if (err) {
+    //             console.log(err)
+    //             return
+    //         }
+    //         return data;
+    //     }).then(data => {
+    //         console.log(data);
+    //         usersFFile = JSON.parse(data);
+
+    //         console.log(usersFFile);
+    //         const newUser = { email, password }
+
+    //         usersFFile.push(newUser);
+    //         console.log(usersFFile);
+    //     }).then( data => 
+    //         { writeFilePromise(dbPath, JSON.stringify(usersFFile) ,(err) => {
+    //         // console.log(1);
+    //         if (err) {
+    //         console.log(err)
+    //         return
+    //         }
+    //         })
+    //     }).then(() => {
+    //         readFilePromise(dbPath, (err, data) => {
+    //         if (err) {
+    //         console.log(err)
+    //         return
+    //         }
+    //                     }).then((data) => {
+    //                         console.log(33);    
+    //                         usersFFile = JSON.parse(data);
+    
+    //                         res.render('allUsers', { usersFFile });
+    //                     })
+    //             })
+
+    // })
 
 
 app.listen (PORT, () => {
     console.log('app listen ', PORT)
-    })  
+    })
